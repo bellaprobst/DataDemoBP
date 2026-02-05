@@ -1,4 +1,4 @@
-name: GL Summary
+name: GL Summary + Benford
 
 on:
   push:
