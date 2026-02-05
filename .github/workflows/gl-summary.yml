@@ -1,0 +1,32 @@
+name: GL Summary
+
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+  analyze:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Run GL analysis
+        run: |
+          python scripts/analyze_gl.py --input "je_samples (1).xlsx" --output-dir outputs
+
+      - name: Upload outputs
+        uses: actions/upload-artifact@v4
+        with:
+          name: gl-summary-outputs
+          path: outputs
